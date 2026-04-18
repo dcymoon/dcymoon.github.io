@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { caseStudies, getCaseStudy } from "@/lib/caseStudies";
 
@@ -23,7 +24,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
       </Link>
 
       {/* Header */}
-      <div className="mt-8 mb-12">
+      <div className="mt-8 mb-10">
         <p
           className="text-xs tracking-widest uppercase mb-4"
           style={{ color: "var(--text-muted)" }}
@@ -41,11 +42,51 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
         </p>
       </div>
 
-      {/* Cover placeholder */}
+      {/* Metadata row */}
       <div
-        className="w-full aspect-video rounded-sm mb-16"
+        className="grid grid-cols-3 gap-6 py-6 mb-10 border-y"
+        style={{ borderColor: "var(--border)" }}
+      >
+        <div>
+          <p className="text-xs tracking-widest uppercase mb-1" style={{ color: "var(--text-muted)" }}>
+            Role
+          </p>
+          <p className="text-sm" style={{ color: "var(--text)" }}>
+            {cs.role}
+          </p>
+        </div>
+        <div>
+          <p className="text-xs tracking-widest uppercase mb-1" style={{ color: "var(--text-muted)" }}>
+            Duration
+          </p>
+          <p className="text-sm" style={{ color: "var(--text)" }}>
+            {cs.duration}
+          </p>
+        </div>
+        <div>
+          <p className="text-xs tracking-widest uppercase mb-1" style={{ color: "var(--text-muted)" }}>
+            Tools
+          </p>
+          <p className="text-sm" style={{ color: "var(--text)" }}>
+            {cs.tools}
+          </p>
+        </div>
+      </div>
+
+      {/* Cover image */}
+      <div
+        className="w-full aspect-video rounded-sm mb-16 overflow-hidden relative"
         style={{ background: cs.coverColor }}
-      />
+      >
+        {cs.coverImage && (
+          <Image
+            src={cs.coverImage}
+            alt={cs.title}
+            fill
+            className="object-cover"
+          />
+        )}
+      </div>
 
       {/* Overview */}
       <section className="mb-12">
@@ -60,10 +101,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
         </p>
       </section>
 
-      <div
-        style={{ borderTop: "1px solid var(--border)" }}
-        className="mb-12"
-      />
+      <div style={{ borderTop: "1px solid var(--border)" }} className="mb-12" />
 
       {/* Problem */}
       <section className="mb-12">

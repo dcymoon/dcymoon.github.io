@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { caseStudies } from "@/lib/caseStudies";
+import Image from "next/image";
+import { visibleCaseStudies } from "@/lib/caseStudies";
 
 export default function WorkPage() {
   return (
@@ -17,7 +18,7 @@ export default function WorkPage() {
       </div>
 
       <div>
-        {caseStudies.map((cs, i) => (
+        {visibleCaseStudies.map((cs, i) => (
           <Link
             key={cs.slug}
             href={`/work/${cs.slug}`}
@@ -31,9 +32,18 @@ export default function WorkPage() {
               {String(i + 1).padStart(2, "0")}
             </span>
             <div
-              className="w-20 h-14 rounded-sm flex-shrink-0"
+              className="w-20 h-14 rounded-sm flex-shrink-0 overflow-hidden relative"
               style={{ background: cs.coverColor }}
-            />
+            >
+              {cs.coverImage && (
+                <Image
+                  src={cs.coverImage}
+                  alt={cs.title}
+                  fill
+                  className="object-cover"
+                />
+              )}
+            </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-baseline justify-between gap-4 mb-2">
                 <h2 className="text-base font-medium" style={{ color: "var(--text)" }}>

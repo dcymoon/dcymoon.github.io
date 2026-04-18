@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { caseStudies } from "@/lib/caseStudies";
+import Image from "next/image";
+import { visibleCaseStudies } from "@/lib/caseStudies";
 
 export default function Home() {
-  const featured = caseStudies.slice(0, 3);
+  const featured = visibleCaseStudies.slice(0, 3);
 
   return (
     <div className="max-w-5xl mx-auto px-6">
@@ -49,9 +50,18 @@ export default function Home() {
           {featured.map((cs) => (
             <Link key={cs.slug} href={`/work/${cs.slug}`} className="group block">
               <div
-                className="aspect-video rounded-sm mb-4 w-full"
+                className="aspect-video rounded-sm mb-4 w-full overflow-hidden relative"
                 style={{ background: cs.coverColor }}
-              />
+              >
+                {cs.coverImage && (
+                  <Image
+                    src={cs.coverImage}
+                    alt={cs.title}
+                    fill
+                    className="object-cover"
+                  />
+                )}
+              </div>
               <p className="text-xs mb-1" style={{ color: "var(--text-muted)" }}>
                 {cs.category}
               </p>
